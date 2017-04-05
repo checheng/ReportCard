@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textView"
+        android:textSize="40px"
+        style="@style/control_item_textview"
+        android:text="TextView"/>
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="120px"
+        android:textSize="45px"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:layout_height="100px"
+        android:layout_marginLeft="3px"
+        android:layout_gravity="center"
+        android:background="@drawable/shape"/>
+
+</LinearLayout>

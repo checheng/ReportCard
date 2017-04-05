@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="sockettest.example.com.myapplication"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="8"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".Data"
+        android:allowBackup="true"
+        android:icon="@drawable/thelogo"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".frist"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".second"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".fourth"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".thrid"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".fifth"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <service android:name=".BackService">
+            <intent-filter>
+                <action android:name="ITOP.MOBILE.SIMPLE.SERVICE.SENSORSERVICE"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="design_width"
+            android:value="1080"/>
+        <meta-data
+            android:name="design_height"
+            android:value="1920"/>
+
+        <activity android:name=".baseAcitivity">
+        </activity>
+        <activity android:name=".thePageOne">
+        </activity>
+        <activity android:name=".thePageTwo">
+        </activity>
+        <activity android:name=".thePageThree">
+        </activity>
+        <activity android:name=".thePageFour">
+        </activity>
+    </application>
+
+</manifest>

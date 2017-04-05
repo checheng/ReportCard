@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">电能质量管理系统</string>
+    <string-array name="安装CT">
+        <item>负载侧</item>
+        <item>系统侧</item>
+    </string-array>
+    <string-array name="运行模式">
+        <item>调试模式</item>
+        <item>补偿模式</item>
+        <item>定标模式</item>
+    </string-array>
+    <string-array name="装置信息">
+        <item>MEC</item>
+        <item>TSVG</item>
+        <item>SVG</item>
+    </string-array>
+    <string-array name="comp_mode">
+        <item>补偿模式</item>
+        <item>调试模式</item>
+    </string-array>
+</resources>
