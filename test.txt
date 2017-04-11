@@ -4,5 +4,15 @@ Creating a new branch is quick & simple
 Creating a new branch is quick AND simple.
 >>>>>>> miaomiao
 
+<<<<<<< Updated upstream
 agagagag  
 Git is a free software
+=======
+agagagag
+
+git stash
+>>>>>>> Stashed changes
+
+
+
+ohaha
