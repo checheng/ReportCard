@@ -164,5 +164,25 @@
         android:layout_marginLeft="50px"
         android:layout_toRightOf="@+id/thecenter"
         android:id="@+id/modify"/>
+
+        <Button
+        android:id="@+id/updata"
+        style="@style/the_buttonstyle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1370px"
+        android:layout_height="120px"
+        android:background="@drawable/cartoon_button"
+        android:onClick="star"
+        android:text="开机"/>
+
+        <Button
+            android:id="@+id/updatatest"
+            style="@style/the_buttonstyle"
+            android:layout_height="120px"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="1370px"
+            android:background="@drawable/cartoon_button"
+            android:onClick="selected" android:text="测试"/>
     </RelativeLayout>
 </RelativeLayout>

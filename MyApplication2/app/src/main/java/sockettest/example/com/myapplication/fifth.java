@@ -201,16 +201,16 @@ public class fifth extends AutoLayoutActivity {
         if(event.getAction() == MotionEvent.ACTION_UP) {
             x2 = event.getX();
 
-             if(x2 - x1 > 50) {
+       /*     if (x2 - x1 > 50) {
                 unbindService(serviceConnection);
                 mLocalBroadcastManager.unregisterReceiver(mReciver);
                 Intent intent = new Intent();
                 intent.setClass(fifth.this, fourth.class);
                 startActivity(intent);
-                overridePendingTransition(R.animator.fromright,R.animator.toleft);
+                overridePendingTransition(R.animator.fromright, R.animator.toleft);
 
                 //finish();
-            }
+            }*/
         }
 
         return super.onTouchEvent(event);

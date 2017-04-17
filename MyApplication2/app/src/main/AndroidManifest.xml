@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
@@ -37,10 +38,6 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".fourth"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".thrid"
             android:screenOrientation="portrait">
         </activity>
@@ -62,15 +59,20 @@
             android:name="design_height"
             android:value="1920"/>
 
-        <activity android:name=".baseAcitivity">
+        <activity android:name=".baseAcitivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".thePageOne">
+        <activity android:name=".thePageOne"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".thePageTwo">
+        <activity android:name=".thePageTwo"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".thePageThree">
+        <activity android:name=".thePageThree"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".thePageFour">
+        <activity android:name=".thePageFour"
+                  android:screenOrientation="portrait">
         </activity>
     </application>
 

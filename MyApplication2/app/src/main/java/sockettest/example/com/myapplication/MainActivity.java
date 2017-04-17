@@ -27,6 +27,8 @@ import java.lang.ref.WeakReference;
 
 public class MainActivity extends AutoLayoutActivity {
 
+	///11111111
+
 	float x1 = 0;
 	float x2 = 0;
 	float y1 = 0;
@@ -158,7 +160,7 @@ public class MainActivity extends AutoLayoutActivity {
 						Data.permission = true;
 					}
 					Toast.makeText(MainActivity.this, "成功登陆", Toast.LENGTH_SHORT).show();
-					Data.HOST = "10.10.100.254";
+					Data.HOST = "200.100.1.100";//    200.100.1.100    10.10.100.254
 					Data.PORT = 8899;
 
 					if (sp.getString("hostnumber", "").length() == 0) {
@@ -168,13 +170,15 @@ public class MainActivity extends AutoLayoutActivity {
 					if (mCheckBox.isChecked()) {
 						editor.putString("USERNAME", usernameValue);
 						editor.putString("PASSWORD", passwordVlue);
-						editor.putBoolean(" CHECKBOX", true);
+						editor.putBoolean("CHECKBOX", true);
 						editor.commit();
+//						Log.w("记录", sp.getString("USERNAME","")+"\n"+ sp.getString("PASSWORD","")+"\n"+sp.getBoolean("CHECKBOX", false));
 					} else if (!mCheckBox.isChecked()) {
 						editor.putString("USERNAME", "");
 						editor.putString("PASSWORD", "");
 						editor.putBoolean("CHECKBOX", false);
 						editor.commit();
+//						Log.w("清空", sp.getString("USERNAME","")+"\n"+ sp.getString("PASSWORD","")+"\n"+sp.getBoolean("CHECKBOX", false));
 					}
 					Intent intent = new Intent();
 					intent.setClass(MainActivity.this, thePageOne.class);
@@ -186,6 +190,7 @@ public class MainActivity extends AutoLayoutActivity {
 			}
 		});
 
+//		Log.w("验证", sp.getString("USERNAME","")+"\n"+ sp.getString("PASSWORD","")+"\n"+sp.getBoolean("CHECKBOX", false));
         if (sp.getBoolean("CHECKBOX", false)) {
             mCheckBox.setChecked(true);
             username.setText(sp.getString("USERNAME",""));

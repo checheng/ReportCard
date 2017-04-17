@@ -408,7 +408,7 @@ public class thrid extends AutoLayoutActivity {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             x2 = event.getX();
             if (x1 - x2 > 50) {
-                if (permission) {
+           /*     if (permission) {
                     unbindService(serviceConnection);
                     mLocalBroadcastManager.unregisterReceiver(mReciver);
                     Intent intent = new Intent();
@@ -416,7 +416,7 @@ public class thrid extends AutoLayoutActivity {
                     startActivity(intent);
                     overridePendingTransition(R.animator.fromright, R.animator.toleft);
                     //finish();
-                }
+                }*/
             } else if (x2 - x1 > 50) {
                 unbindService(serviceConnection);
                 mLocalBroadcastManager.unregisterReceiver(mReciver);

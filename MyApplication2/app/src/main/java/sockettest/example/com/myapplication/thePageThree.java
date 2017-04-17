@@ -89,11 +89,11 @@ public class thePageThree extends AutoLayoutActivity {
                 String message = intent.getStringExtra("message");
                 message = message.replace(" ", "");
                 message = message.toUpperCase();
+//                ToastUtil.toast(getApplicationContext(),message);
                 try {
                     if (message.substring(4, 6).equals("46")) {
                         Log.w("jinru","");
                         GridViewDataObject[] ss = mRead_lowerComputer.retrunContentGridViewDataObject(message);
-
                         for (int i = 0; i < ss.length; i++) {
                             if (i < 7) {
                                 content7_13[i] = ss[i].getValue();
@@ -123,8 +123,8 @@ public class thePageThree extends AutoLayoutActivity {
                         mFormGridViewAdapter2.setGridViewDataObject(mapList2);
                         mGridView2.setAdapter(mFormGridViewAdapter2);
                         mFormGridViewAdapter2.notifyDataSetChanged();
-                        for (String sss:content7_13) Log.w("12345",sss);
-                        for (String sss:content25_29) Log.w("12345",sss);
+//                        for (String sss:content7_13) Log.w("12345",sss);
+//                        for (String sss:content25_29) Log.w("12345",sss);
                         if (content7_13[0].equals("1")){
                             comp_mode.setSelection(0);
                         }else comp_mode.setSelection(1);
@@ -335,7 +335,7 @@ public class thePageThree extends AutoLayoutActivity {
                     echo.setEnabled(false);
                      Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(7));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                     echo.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -352,7 +352,7 @@ public class thePageThree extends AutoLayoutActivity {
                     modify.setEnabled(false);
                      Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mWrite_lowerComputer.theWriteCode("0007", "0023", "46", ContentOfModify(form14_24,form30_40,content7_13,content25_29,com_hn14String)));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                  /*   boolean isSend2 = iBackService.sendMessage(mWrite_lowerComputer.theWriteCode("0001", "0001", "02", "3366"));
                      Thread.sleep(200);*/
                     modify.setEnabled(true);
@@ -473,7 +473,7 @@ public class thePageThree extends AutoLayoutActivity {
                     modify.setEnabled(false);
                      Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(7));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                     modify.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -513,76 +513,90 @@ public class thePageThree extends AutoLayoutActivity {
         return super.onTouchEvent(event);
 
     }
-    public String ContentOfModify(GridViewDataObject[] form14to24, GridViewDataObject[] form30to40,String[] content7o13, String[] content25to29,String com) {
+    public String ContentOfModify(GridViewDataObject[] form14to24, GridViewDataObject[] form30to40,String[] content7to13, String[] content25to29,String com) {
         String s = "";
         try {
             StringBuilder stringBuilder = new StringBuilder();
-            content7o13[6] = theString(Integer.parseInt(udc_cap_series_2.getText().toString(),16));
-            content7_13[2]=   restart_minute.getText().toString();
-            content7_13[3]=   restart_enable.getText().toString();
-            for (int i = 0; i < content7o13.length; i++) {
-                switch (i) {
-                    case 0:
-                        if (comp_mode.getSelectedItemPosition() == 0) {
-                            stringBuilder.append("0001");
-                        } else stringBuilder.append("0002");
-                        break;
-                    case 4:
-                        if (use_pwm8_module1Tag) {
-                            stringBuilder.append("0001");
-                        } else stringBuilder.append("0000");
-                        break;
-                    case 5:
-                        if (use_pwm8_module2Tag) {
-                            stringBuilder.append("0001");
-                        } else stringBuilder.append("0000");
-                        break;
-                    default:
-                        stringBuilder.append(theString(Integer.parseInt(content7o13[i])));
-                        break;
-                }
-            }
+            String [] content7_41 =new String[35];
+            //7~13
+            if (comp_mode.getSelectedItemPosition() == 0) {
+                content7_41[0] = "0001";
+            } else if (comp_mode.getSelectedItemPosition() == 1) {
+                content7_41[0] = "0002";
+            } else content7_41[0] = theString(Integer.parseInt(content7to13[0],10));
+
+            content7_41[1] = theString(Integer.parseInt(content7to13[1],10));
+
+            if (restart_minute.getText().toString().equals("")) {
+                content7_41[2] = theString(Integer.parseInt(content7to13[2],10));
+            } else content7_41[2] = theString(Integer.parseInt(restart_minute.getText().toString(),10));
+
+            if (restart_enable.getText().toString().equals("")) {
+                content7_41[3] = theString(Integer.parseInt(content7to13[3],10));
+            } else content7_41[3] =theString(Integer.parseInt( restart_enable.getText().toString(),10));
+
+            if (use_pwm8_module1Tag) {
+                content7_41[4] = "0001";
+            } else if (!use_pwm8_module1Tag) {
+                content7_41[4] = "0000";
+            } else content7_41[4] = content7to13[4];
+
+            if (use_pwm8_module2Tag) {
+                content7_41[5] = "0001";
+            } else if (!use_pwm8_module2Tag) {
+                content7_41[5] = "0000";
+            } else content7_41[5] = content7to13[5];
+
+            content7_41[6] = theString(Integer.parseInt(udc_cap_series_2.getText().toString(),10));
+
+            //14~24
             for (int i= 0;i<form14to24.length;i++){
-                stringBuilder.append(theString(Integer.parseInt(form14to24[i].getValue())));
+                content7_41[i+7] =theString(Integer.parseInt(form14to24[i].getValue()));
             }
-            content25to29[1]=ct_ratio.getText().toString();
-            for (int i= 0;i<content25to29.length;i++){
-                switch (i) {
-                    case 0:
-                        if (ct_location.getSelectedItemPosition() == 0) {
-                            stringBuilder.append("0000");
-                        } else stringBuilder.append("0001");
-                        break;
-                    case 2:
-                        if (com_hn0Tag) {
-                            stringBuilder.append("0400");
-                        } else stringBuilder.append("0000");
-                        break;
-                    case 3:
-                        if (com_hn1Tag) {
-                            stringBuilder.append("0400");
-                        } else stringBuilder.append("0000");
-                        break;
-                    case 4:
-                        if (com_hn2Tag) {
-                            stringBuilder.append("0400");
-                        } else stringBuilder.append("0000");
-                        break;
-                    default:
-                       break;
-                }
-            }
+
+            //25~29
+            if (ct_location.getSelectedItemPosition() == 0) {
+                content7_41[18] = "0000";
+            } else if (ct_location.getSelectedItemPosition() == 1) {
+                content7_41[18] = "0001";
+            } else content7_41[18] = theString(Integer.parseInt(content25to29[0]));
+
+
+            if (ct_ratio.getText().toString().equals("")) {
+                content7_41[19] = theString(Integer.parseInt(content25to29[1]));
+            } else  content7_41[19] = Data.theString(Integer.parseInt(ct_ratio.getText().toString(),10));
+
+            if (com_hn0Tag) {
+                content7_41[20]="0400";
+            } else if (!com_hn0Tag){ content7_41[20]="0000";}
+
+            if (com_hn1Tag) {
+                content7_41[21]="0400";
+            } else if (!com_hn1Tag){ content7_41[21]="0000";}
+
+            if (com_hn2Tag) {
+                content7_41[22]="0400";
+            } else if (!com_hn2Tag){ content7_41[22]="0000";}
+
+            //30~40
             for (int i= 0;i<form30to40.length;i++){
-                stringBuilder.append(theString(Integer.parseInt(form30to40[i].getValue())));
+                content7_41[i+23] =theString(Integer.parseInt(form30to40[i].getValue()));
             }
             if (com_hn14Tag){
-                stringBuilder.append("0400");
-            } else stringBuilder.append("0000");
+                content7_41[34]="0400";
+            } else { content7_41[34]="0000";}
+
+            Log.w("dddd"," "+content7_41.length);
+            for (int i = 0;i<content7_41.length;i++){
+                if (content7_41[i]==null){Log.w("123",""+i);}
+                stringBuilder.append(content7_41[i]);
+
+            }
             s=stringBuilder.toString();
+            Log.w("dddd"," "+s);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return s;
     }
 

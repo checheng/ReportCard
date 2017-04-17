@@ -17,7 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import function_class.crc16;
-import function_class.hex_string;
+import function_class.HexStringChange;
 
 import static sockettest.example.com.myapplication.Data.T;
 import static sockettest.example.com.myapplication.Data.spp;
@@ -145,7 +145,7 @@ public class BackService extends Service {
 				//	StringtoIntHex(message);
 				message = message.replace(" ", "");
 				message = message.toUpperCase();
-				mBytes = hex_string.hexStringToByte(message);
+				mBytes = HexStringChange.hexStringToByte(message);
 				os.write(mBytes);
 				os.flush();
 				sendTime = System.currentTimeMillis();
@@ -231,7 +231,7 @@ public class BackService extends Service {
 							 * 获得接收到的内容*
 							 * */
 							//获得将16进制数组转成16进制字符串的String
-							String message = new String(hex_string.bytesToHexStringwithlength(buffer, length)).trim();
+							String message = new String(HexStringChange.bytesToHexStringwithlength(buffer, length)).trim();
 							Log.w("message",message);
 							if (message.equals("ok")) {
 								Intent intent = new Intent(HEART_BEAT_ACTION);

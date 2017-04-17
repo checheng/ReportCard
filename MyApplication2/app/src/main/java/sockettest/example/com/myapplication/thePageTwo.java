@@ -28,6 +28,8 @@ public class thePageTwo extends baseAcitivity {
     private GridView mGridView;
     private GridViewAdapter mFormGridViewAdapter;
 
+
+
     private IBackService iBackService;
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
@@ -66,6 +68,7 @@ public class thePageTwo extends baseAcitivity {
                 String message = intent.getStringExtra("message");
                 message = message.replace(" ", "");
                 message = message.toUpperCase();
+//                ToastUtil.toast(getApplicationContext(),message);
                 try {
                     if (message.substring(4, 6).equals("60")) {
                         //112~159
@@ -130,7 +133,11 @@ public class thePageTwo extends baseAcitivity {
             "15次畸变", "0", "0", "0",
             "总畸变率U", "0", "0", "0",
     };
+
+
+
     public void  init(){
+
 
 
         List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
@@ -163,7 +170,7 @@ public class thePageTwo extends baseAcitivity {
             public void run() {
                 while (Cycling_Instructions) {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                         boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(112));
                         Thread.sleep(500);
                     } catch (Exception e) {
@@ -182,6 +189,8 @@ public class thePageTwo extends baseAcitivity {
         Cycling_Instructions = false;
         super.onPause();
     }
+
+
 
 
     //滑动切换

@@ -1,14 +1,21 @@
 package sockettest.example.com.myapplication;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -20,30 +27,34 @@ import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.zhy.autolayout.AutoLayoutActivity;
-
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.picker.FilePicker;
+import cn.qqtheme.framework.util.StorageUtils;
 import function_class.GridViewAdapter;
 import function_class.GridViewDataObject;
+import function_class.ReadSDFile;
 import function_class.read_LowerComputer;
 import function_class.write_LowerComputer;
 
+import static function_class.ReadSDFile.toByteArray2;
 import static sockettest.example.com.myapplication.Data.theString;
 import static sockettest.example.com.myapplication.Data.thenumber;
 
-public class thePageFour extends AutoLayoutActivity {
+public class thePageFour extends baseAcitivity {
     private GridView mGridView;
     private GridViewAdapter mFormGridViewAdapter;
 
     private EditText in_parallel_num,run_module_num,master_moudel,rtu_addr,ip_addr,gw_addr,msk_addr,mac_addr;
-    private String[] netInfo=new String[4],zzInfo=new String[4];
+    private String[] netInfo=new String[15],zzInfo=new String[4];
     private String zzposition;
     private Spinner mSpinner;
 
     private Button echo,modify;
+    private Button mUpdata,mTest;
     private write_LowerComputer mWrite_lowerComputer = new write_LowerComputer();
     private read_LowerComputer mRead_lowerComputer = new read_LowerComputer();
 
@@ -85,6 +96,7 @@ public class thePageFour extends AutoLayoutActivity {
                 //接收到数据之后判断CRC 长度
                 message = message.replace(" ", "");
                 message = message.toUpperCase();
+//                ToastUtil.toast(getApplicationContext(),message);
                 try {
                     if (message.substring(4, 6).equals("52")) {
                         //表格
@@ -117,6 +129,7 @@ public class thePageFour extends AutoLayoutActivity {
                         run_module_num.setText(zzInfo[1]);
                         master_moudel.setText(zzInfo[2]);
                         rtu_addr.setText(zzInfo[3]);
+
                         ip_addr.setText(thenumber(netInfo[0])+"."+thenumber(netInfo[1])+"."+thenumber(netInfo[2])+"."+thenumber(netInfo[3]));
                         gw_addr.setText(thenumber(netInfo[4])+"."+thenumber(netInfo[5])+"."+thenumber(netInfo[6])+"."+thenumber(netInfo[7]));
                         msk_addr.setText(thenumber(netInfo[8])+"."+thenumber(netInfo[9])+"."+thenumber(netInfo[10])+"."+thenumber(netInfo[11]));
@@ -138,6 +151,7 @@ public class thePageFour extends AutoLayoutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ReadSDFile.verifyStoragePermissions(thePageFour.this);
         setContentView(R.layout.activity_the_page_four);
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -178,6 +192,39 @@ public class thePageFour extends AutoLayoutActivity {
   /*  private EditText in_parallel_num,run_module_num,master_moudel,rtu_addr,ip_addr,gw_addr,msk_addr,mac_addr;
     private String[] netInfo=new String[4],zzInfo=new String[4];*/
     public void init() {
+
+        mTest = (Button)findViewById(R.id.updatatest);
+        mTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                selectfile();
+            }
+        });
+        mUpdata = (Button)findViewById(R.id.updata);
+        mUpdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    filecontent = toByteArray2(UPDATA_FILE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0;i<5;i++){
+                    Log.w("内容",String.valueOf(filecontent[i] ));
+                }
+//              Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("*/*");
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                try {
+//                    startActivityForResult(intent, 2016);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+
+            }
+        });
         // azct.getSelectedItemPosition() == 0) {
         mSpinner = (Spinner)findViewById(R.id.Spinner);
         //绑定控件
@@ -209,7 +256,7 @@ public class thePageFour extends AutoLayoutActivity {
                     echo.setEnabled(false);
                     Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(42));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                     echo.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -226,7 +273,7 @@ public class thePageFour extends AutoLayoutActivity {
                     modify.setEnabled(false);
                     Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mWrite_lowerComputer.theWriteCode("002A", "0029", "52", ContentOfModify(form42_62,zzposition,zzInfo,netInfo)));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                     modify.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -250,7 +297,7 @@ public class thePageFour extends AutoLayoutActivity {
                     modify.setEnabled(false);
                     Thread.sleep(200);
                     boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(42));
-                    Thread.sleep(800);
+                    Thread.sleep(200);
                     modify.setEnabled(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -284,34 +331,125 @@ public class thePageFour extends AutoLayoutActivity {
     }
     //将本界面需记录的内容转换成十六进制字符串功能函数
     public String ContentOfModify(GridViewDataObject[] form42, String zzposition,String[] zzInfo, String[] netInfo) {
-        String s = "";
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-            StringBuilder stringBuilder = new StringBuilder();
+            String [] content42_82 = new String[41];
+
             //目标容量0
             for (int i = 0;i<form42.length;i++){
-                stringBuilder.append(theString(Integer.parseInt(form42[i].getValue())));
+                content42_82[i]=theString(Integer.parseInt(form42[i].getValue()));
             }
             switch (mSpinner.getSelectedItemPosition()) {
                 case 0:
-                    stringBuilder.append("0000");
+                    content42_82[21]="0000";
                     break;
                 case 1:
-                    stringBuilder.append("0001");
+                    content42_82[21]="0001";
                     break;
                 case 2:
-                    stringBuilder.append("0010");
+                    content42_82[21]="0010";
                     break;
             }
-            for (int i = 0; i < zzInfo.length; i++) {
-                stringBuilder.append(zzInfo[i]);
+            if ( in_parallel_num.getText().toString().equals("")){
+                content42_82[22]=zzInfo[0];
+            }else content42_82[22] = in_parallel_num.getText().toString();
+
+            if ( run_module_num.getText().toString().equals("")){
+                content42_82[23]=zzInfo[1];
+            }else content42_82[23] = run_module_num.getText().toString();
+
+            if ( master_moudel.getText().toString().equals("")){
+                content42_82[24]=zzInfo[2];
+            }else content42_82[24] = master_moudel.getText().toString();
+
+            if ( rtu_addr.getText().toString().equals("")){
+                content42_82[25]=zzInfo[3];
+            }else content42_82[25] = rtu_addr.getText().toString();
+
+            for (String ss:netInfo){
+                Log.w("123",ss);
             }
-            for (int i = 0; i < netInfo.length; i++) {
-                    stringBuilder.append(netInfo[i]);
+            for (int i =0;i <15;i++){
+                content42_82[i+26]=netInfo[i];
             }
-            s=stringBuilder.toString();
+
+            for (String ss:content42_82){
+                stringBuilder.append(ss);
+            }
+//            Log.w("123",stringBuilder.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return s;
+        return stringBuilder.toString();
     }
+
+    private final static  String UPDATA_FILE = "/storage/emulated/0/1234.doc";
+    private byte[] filecontent;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        if (requestCode == 2016) {
+            Uri uri = data.getData();
+
+         //此处暂时先写死
+
+
+        /*    try {
+                byte[] file = ReadSDFile.toByteArray2(filepath);
+                  *//*  for (int i =0;i<file.length;i++){
+                        Log.w("文件内容",String.valueOf(file[i]));
+                    }*//*
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+
+        }
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Files.FileColumns.DATA };
+        for (String ss:proj){
+            Log.w("输出",ss);
+        }
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
+
+
+    private void selectfile() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.w("222","进入");
+//            return;
+        }
+        FilePicker picker = new FilePicker(this, FilePicker.FILE);
+        Log.w("1","进入");
+        picker.setShowHideDir(false);
+        Log.w("2","进入");
+        String s = "";
+        picker.setRootPath(StorageUtils.getRootPath(this,true));
+        Log.w("3","进入");
+       /* picker.setAllowExtensions(new String[]{".*"});
+        Log.w("4","进入");*/
+        picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+            @Override
+            public void onFilePicked(String currentPath) {
+                Log.w("5","进入");
+                String earthPath = "/sdcard/" + currentPath.substring(currentPath.lastIndexOf("/") + 1, currentPath.length());
+                Log.w("地址",earthPath);
+            }
+        });
+        picker.show();
+    }
+
 }

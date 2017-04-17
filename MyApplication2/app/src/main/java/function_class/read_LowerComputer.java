@@ -1,7 +1,6 @@
 package function_class;
 
 import android.os.Handler;
-import android.util.Log;
 
 import java.math.BigDecimal;
 
@@ -30,6 +29,17 @@ public class read_LowerComputer {
     public String pretreatment(String s) {
         s = thehostnumber(s);
         s = crc16.crc16(s);
+        return s;
+    }
+
+
+    //起始地址，长度，字节长度,内容
+    public String theWriteCode(String address,String length){
+        String mString = "03";
+        StringBuffer theCommand= new StringBuffer();
+        theCommand.append(thehostnumber(mString));
+        theCommand.append(address).append(length);
+        String s = crc16.crc16(theCommand.toString());
         return s;
     }
 
@@ -183,7 +193,7 @@ public class read_LowerComputer {
             //校验crc
             match = crc16.verify(s);
             int obtianlength = Integer.parseInt(s.substring(4, 6), 16);
-            Log.w("456", "长度为：" + obtianlength);
+//            Log.w("456", "长度为：" + obtianlength);
             if (match) {
                 switch (obtianlength) {
                     case 62:
@@ -214,7 +224,7 @@ public class read_LowerComputer {
             //校验crc
             match = crc16.verify(s);
             int obtianlength = Integer.parseInt(s.substring(4, 6), 16);
-            Log.w("123", "长度为：" + obtianlength);
+//            Log.w("123", "长度为：" + obtianlength);
             if (match) {
                 switch (obtianlength) {
                     case 82:
@@ -246,7 +256,7 @@ public class read_LowerComputer {
             //前三位为主机位、功能码，字节长度忽略不计,末尾crc16校验去除
             s = s.substring(6, s.length() - 4);
             int length = s.length();
-            Log.w("字节长度为", String.valueOf(length));
+//            Log.w("字节长度为", String.valueOf(length));
             //循环赋值到字符串数组
 
             if (length % 2 == 0 && length > 0) {
@@ -278,7 +288,7 @@ public class read_LowerComputer {
                     for (int i = 0; i < length / 4; i++) {
                         strings112_159[i] = s.substring(4 * i, 4 * i + 4);
                     }
-                    Log.w("111",strings112_159.length+"");
+//                    Log.w("111",strings112_159.length+"");
                     return strings112_159;
                 }
             }
@@ -343,7 +353,7 @@ public class read_LowerComputer {
                         /*    "不平衡度U", "不平衡度I", "输出功率", "系统频率", "\\",*/
                     form160_190[45] = String.valueOf(divisionRetainDecimal(hexStringToInt(strings[4]), 0.1, 1));
                     form160_190[46] = String.valueOf(divisionRetainDecimal(hexStringToInt(strings[5]), 0.1, 1));
-                    Log.w("ww",strings[30]+strings[29]+strings[28]);
+//                    Log.w("ww",strings[30]+strings[29]+strings[28]);
                     form160_190[47] = String.valueOf(divisionRetainDecimal(hexStringToInt(strings[30]), 0.1, 1));
                     form160_190[48] = String.valueOf(divisionRetainDecimal(hexStringToInt(strings[3]), 0.01, 2));
                     return form160_190;
@@ -400,9 +410,9 @@ public class read_LowerComputer {
                         j++;
                         if ((i+1) % 3 == 0 && i > 0) j++;
                     }
-                    Log.w("123",""+form112_159.length);
+//                    Log.w("123",""+form112_159.length);
                     for (int i = 0; i < form112_159.length; i++) {
-                        Log.w("123",form112_159[i]);
+//                        Log.w("123",form112_159[i]);
                     }
                     return form112_159;
                 default:
@@ -492,7 +502,7 @@ public class read_LowerComputer {
      // 将两位16进制字符串转为带正负号的值
     public int plus_inus(String string) {
         int value = Integer.parseInt(string, 16);
-        Log.w("int", String.valueOf(value));
+//        Log.w("int", String.valueOf(value));
         if (value / 32768 > 0) {
             value = value % 32768 - 32768;
         }

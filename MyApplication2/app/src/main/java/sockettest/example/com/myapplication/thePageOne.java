@@ -71,6 +71,7 @@ public class thePageOne extends baseAcitivity {
                 String message = intent.getStringExtra("message");
                 message = message.replace(" ", "");
                 message = message.toUpperCase();
+//                ToastUtil.toast(getApplicationContext(),message);
                 try {
                     if (message.substring(4, 6).equals("2C")) {
                         //90~111
@@ -230,24 +231,25 @@ public class thePageOne extends baseAcitivity {
                     while (Cycling_Instructions) {
                         try {
                             if (TheStarButtonTag){
+                                Thread.sleep(1000);
                                 boolean isSend = iBackService.sendMessage(mWrite_lowerComputer.theWriteCode("0003","0001","02","0001"));
-                                Thread.sleep(500);
+                                Thread.sleep(1000);
                                 TheStarButtonTag=false;
                             }
                             if (TheStopButtonTag){
+                                Thread.sleep(1000);
                                 boolean isSend = iBackService.sendMessage(mWrite_lowerComputer.theWriteCode("0003", "0001", "02", "0000"));
-                                Thread.sleep(500);
+                                Thread.sleep(1000);
                                 TheStopButtonTag = false;
                            }
-                            Thread.sleep(500);
-                            if (!TheStarButtonTag && !TheStopButtonTag) {
+                            if ((!TheStarButtonTag) && (!TheStopButtonTag)) {
+                                Thread.sleep(1500);
                                 boolean isSend = iBackService.sendMessage(mRead_lowerComputer.theAskCode(90));
                             }
-                            Thread.sleep(1000);
-                            if (!TheStarButtonTag && !TheStopButtonTag) {
+                            if ((!TheStarButtonTag) && (!TheStopButtonTag)) {
+                                Thread.sleep(1500);
                                 boolean isSend2 = iBackService.sendMessage(mRead_lowerComputer.theAskCode(160));
                             }
-                            Thread.sleep(500);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

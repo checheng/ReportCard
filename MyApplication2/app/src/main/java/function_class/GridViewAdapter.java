@@ -3,7 +3,6 @@ package function_class;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -158,7 +157,7 @@ public class GridViewAdapter extends BaseAdapter {
                         view = LayoutInflater.from(mContext).inflate(R.layout.grid_item, null);
                         TextView textView = (TextView) view.findViewById(R.id.textView);
                         Map<String, Object> map = mStrings.get(i);
-                        Log.w("111", String.valueOf(map.get("content")));
+//                        Log.w("111", String.valueOf(map.get("content")));
                         textView.setText(String.valueOf(map.get("content")));
                         textView.setGravity(Gravity.CENTER);
                     }
